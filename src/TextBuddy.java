@@ -8,8 +8,12 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class TextBuddy {
+	
 
-    public static void main(String[] args) {
+    private static final String ERROR_WRITING_FILE = "Error writing to file";
+	private static final String ERROR_READING_FILE = "Unable to read file";
+
+	public static void main(String[] args) {
 	    File currentFile = openFile(args[0]);
         Scanner sc = new Scanner(System.in);
 
@@ -30,8 +34,19 @@ public class TextBuddy {
         	addToFile(userCommand, currentFile);
         }else if(command.equals("display")){
         	displayFile(currentFile);
+        }else if(command.equals("clear")){
+        	clearFile(currentFile);
         }
     }
+
+	private static void clearFile(File currentFile) {
+		try {
+			BufferedWriter outToFile = new BufferedWriter(new 
+					FileWriter(currentFile.getName(),true));
+		} catch (IOException e) {
+			System.out.println(ERROR_WRITING_FILE);
+		}
+	}
 
 	private static void displayFile(File currentFile) { 
 		try {
@@ -46,17 +61,15 @@ public class TextBuddy {
 			}
 			
 		} catch (Exception e) {
-			System.out.println("Unable to read file");
+			System.out.println(ERROR_READING_FILE);
 		}
 	}
 
 	private static void addToFile(String userCommand, File currentFile) {
 		String textToAdd = removeFirstWord(userCommand);
 		
-		BufferedWriter outToFile;
-		
 		try {
-			outToFile = new BufferedWriter(new 
+			BufferedWriter outToFile = new BufferedWriter(new 
 					FileWriter(currentFile.getName(),true));
 			
 			if(!isFileEmpty(currentFile)){
@@ -69,7 +82,7 @@ public class TextBuddy {
 					+ ": \"" + textToAdd + "\"");
 			
 		} catch (IOException e) {
-			System.out.println("Error writing to file");
+			System.out.println(ERROR_WRITING_FILE);
 		}
 	}
 
