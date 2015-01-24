@@ -42,7 +42,11 @@ public class TextBuddy {
 	private static void clearFile(File currentFile) {
 		try {
 			BufferedWriter outToFile = new BufferedWriter(new 
-					FileWriter(currentFile.getName(),true));
+					FileWriter(currentFile.getName(),false));
+			
+			outToFile.write("");
+			outToFile.close();
+			
 		} catch (IOException e) {
 			System.out.println(ERROR_WRITING_FILE);
 		}
