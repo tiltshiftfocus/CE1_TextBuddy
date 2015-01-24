@@ -42,7 +42,9 @@ public class TextBuddy {
         	deleteFromFile(userCommand,currentFile);
         }else if(command.equals("exit")){
         	System.exit(0);
-        }
+        }else{
+			System.out.println("command " + userCommand + " is invalid");
+		}
     }
 
 
