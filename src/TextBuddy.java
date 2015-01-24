@@ -1,5 +1,8 @@
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -24,11 +27,30 @@ public class TextBuddy {
         String command = getFirstWord(userCommand);
         
         if(command.equals("add")){
-        	add(userCommand, currentFile);
+        	addToFile(userCommand, currentFile);
+        }else if(command.equals("display")){
+        	displayFile(currentFile);
         }
     }
 
-	private static void add(String userCommand, File currentFile) {
+	private static void displayFile(File currentFile) { 
+		try {
+			BufferedReader inputFile = new BufferedReader(new 
+					FileReader(currentFile.getName()));
+			
+			String line;
+			int numberOfLines = 0;
+			while((line = inputFile.readLine()) != null){
+				numberOfLines++;
+				System.out.println(numberOfLines + ". " + line);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Unable to read file");
+		}
+	}
+
+	private static void addToFile(String userCommand, File currentFile) {
 		String textToAdd = removeFirstWord(userCommand);
 		
 		BufferedWriter outToFile;
