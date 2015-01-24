@@ -49,14 +49,14 @@ public class TextBuddy {
 	private static void deleteFromFile(String userCommand, File currentFile) {
 		String textLineToRemove = removeFirstWord(userCommand);
 		int lineToRemove = Integer.parseInt(textLineToRemove)-1; 
-		List<String> linesOfString = new LinkedList<String>();
+		List<String> linesOfStringFromFile = new LinkedList<String>();
 		
 		try {
-			addStringToQueue(currentFile, linesOfString);
-			String deletedString = linesOfString.remove(lineToRemove);
+			addStringToQueue(currentFile, linesOfStringFromFile);
+			String deletedString = linesOfStringFromFile.remove(lineToRemove);
 			clearFile(currentFile);
-			Iterator<String> listIterator = linesOfString.iterator();
-			
+
+			Iterator<String> listIterator = linesOfStringFromFile.iterator(); // using Iterator to search LinkedList
 			while(listIterator.hasNext()){
 				String textToAdd = listIterator.next();
 				addToFile(textToAdd, currentFile);
@@ -72,8 +72,7 @@ public class TextBuddy {
 	}
 
 	private static void addStringToQueue(File currentFile,
-			List<String> linesOfString) throws FileNotFoundException,
-			IOException {
+			List<String> linesOfString) throws FileNotFoundException, IOException {
 		
 		BufferedReader inputFile = new BufferedReader(new 
 				FileReader(currentFile.getName()));
@@ -110,10 +109,10 @@ public class TextBuddy {
 						FileReader(currentFile.getName()));
 				
 				String line;
-				int numberOfLines = 0;
+				int stringAtLine = 0;
 				while((line = inputFile.readLine()) != null){
-					numberOfLines++;
-					System.out.println(numberOfLines + ". " + line);
+					stringAtLine++;
+					System.out.println(stringAtLine + ". " + line);
 				}
 				
 			} catch (Exception e) {
@@ -163,7 +162,7 @@ public class TextBuddy {
                 file.createNewFile();
             } catch (IOException e) {
                 System.out.println("Error opening file.");
-                System.exit(1);
+                System.exit(0);
             }
         }
         return file;
