@@ -5,10 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class TextBuddy {
-	
 
     private static final String ERROR_WRITING_FILE = "Error writing to file";
 	private static final String ERROR_READING_FILE = "Unable to read file";
@@ -31,13 +33,50 @@ public class TextBuddy {
         String command = getFirstWord(userCommand);
         
         if(command.equals("add")){
-        	addToFile(userCommand, currentFile);
+        	add(userCommand, currentFile);
         }else if(command.equals("display")){
         	displayFile(currentFile);
         }else if(command.equals("clear")){
         	clearFile(currentFile);
+        }else if(command.equals("delete")){
+        	deleteFromFile(userCommand,currentFile);
         }
     }
+
+
+	private static void deleteFromFile(String userCommand, File currentFile) {
+		String textLineToRemove = removeFirstWord(userCommand);
+		int lineToRemove = Integer.parseInt(textLineToRemove)-1; 
+		List<String> linesOfString = new LinkedList<String>();
+		
+		try {
+			addStringToQueue(currentFile, linesOfString);
+			linesOfString.remove(lineToRemove);
+			clearFile(currentFile);
+			Iterator<String> listIterator = linesOfString.iterator();
+			
+			while(listIterator.hasNext()){
+				String textToAdd = listIterator.next();
+				addToFile(textToAdd, currentFile);
+			}
+			
+		} catch (IOException e) {
+			System.out.println(ERROR_READING_FILE);
+		}
+
+	}
+
+	private static void addStringToQueue(File currentFile,
+			List<String> linesOfString) throws FileNotFoundException,
+			IOException {
+		
+		BufferedReader inputFile = new BufferedReader(new 
+				FileReader(currentFile.getName()));
+		String line;
+		while((line = inputFile.readLine()) != null){
+			linesOfString.add(line);
+		}
+	}
 
 	private static void clearFile(File currentFile) {
 		try {
@@ -52,25 +91,35 @@ public class TextBuddy {
 		}
 	}
 
-	private static void displayFile(File currentFile) { 
-		try {
-			BufferedReader inputFile = new BufferedReader(new 
-					FileReader(currentFile.getName()));
-			
-			String line;
-			int numberOfLines = 0;
-			while((line = inputFile.readLine()) != null){
-				numberOfLines++;
-				System.out.println(numberOfLines + ". " + line);
+	private static void displayFile(File currentFile) {
+		if(isFileEmpty(currentFile)){
+			System.out.println(currentFile.getName() + " is empty");
+		}else{
+			try {
+				BufferedReader inputFile = new BufferedReader(new 
+						FileReader(currentFile.getName()));
+				
+				String line;
+				int numberOfLines = 0;
+				while((line = inputFile.readLine()) != null){
+					numberOfLines++;
+					System.out.println(numberOfLines + ". " + line);
+				}
+				
+			} catch (Exception e) {
+				System.out.println(ERROR_READING_FILE);
 			}
-			
-		} catch (Exception e) {
-			System.out.println(ERROR_READING_FILE);
 		}
 	}
-
-	private static void addToFile(String userCommand, File currentFile) {
+	
+	private static void add(String userCommand, File currentFile) {
 		String textToAdd = removeFirstWord(userCommand);
+		addToFile(textToAdd, currentFile);
+		System.out.println("added to " + currentFile.getName()
+				+ ": \"" + textToAdd + "\"");
+	}
+
+	private static void addToFile(String textToAdd, File currentFile) {
 		
 		try {
 			BufferedWriter outToFile = new BufferedWriter(new 
@@ -82,8 +131,6 @@ public class TextBuddy {
 			
 			outToFile.write(textToAdd);
 			outToFile.close();
-			System.out.println("added to " + currentFile.getName()
-					+ ": \"" + textToAdd + "\"");
 			
 		} catch (IOException e) {
 			System.out.println(ERROR_WRITING_FILE);
