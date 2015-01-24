@@ -37,9 +37,11 @@ public class TextBuddy {
         }else if(command.equals("display")){
         	displayFile(currentFile);
         }else if(command.equals("clear")){
-        	clearFile(currentFile);
+        	clear(currentFile);
         }else if(command.equals("delete")){
         	deleteFromFile(userCommand,currentFile);
+        }else if(command.equals("exit")){
+        	System.exit(0);
         }
     }
 
@@ -51,7 +53,7 @@ public class TextBuddy {
 		
 		try {
 			addStringToQueue(currentFile, linesOfString);
-			linesOfString.remove(lineToRemove);
+			String deletedString = linesOfString.remove(lineToRemove);
 			clearFile(currentFile);
 			Iterator<String> listIterator = linesOfString.iterator();
 			
@@ -59,6 +61,9 @@ public class TextBuddy {
 				String textToAdd = listIterator.next();
 				addToFile(textToAdd, currentFile);
 			}
+			
+			System.out.println("deleted from " + currentFile.getName()
+					+ ": \"" + deletedString + "\"");
 			
 		} catch (IOException e) {
 			System.out.println(ERROR_READING_FILE);
@@ -76,6 +81,11 @@ public class TextBuddy {
 		while((line = inputFile.readLine()) != null){
 			linesOfString.add(line);
 		}
+	}
+	
+	private static void clear(File currentFile) {
+		clearFile(currentFile);
+		System.out.println("all content deleted from " + currentFile.getName());
 	}
 
 	private static void clearFile(File currentFile) {
