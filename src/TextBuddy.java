@@ -52,7 +52,7 @@ public class TextBuddy {
 		List<String> linesOfStringFromFile = new LinkedList<String>();
 		
 		try {
-			addStringToQueue(currentFile, linesOfStringFromFile);
+			addStringToList(currentFile, linesOfStringFromFile);
 			String deletedString = linesOfStringFromFile.remove(lineToRemove);
 			clearFile(currentFile);
 
@@ -71,14 +71,15 @@ public class TextBuddy {
 
 	}
 
-	private static void addStringToQueue(File currentFile,
-			List<String> linesOfString) throws FileNotFoundException, IOException {
+	private static void addStringToList(File currentFile,
+										List<String> linesOfStringFromFile)
+			throws FileNotFoundException, IOException {
 		
 		BufferedReader inputFile = new BufferedReader(new 
 				FileReader(currentFile.getName()));
 		String line;
 		while((line = inputFile.readLine()) != null){
-			linesOfString.add(line);
+			linesOfStringFromFile.add(line);
 		}
 	}
 	
