@@ -20,14 +20,16 @@ public class TextBuddy {
         Scanner sc = new Scanner(System.in);
 
         showWelcomeMessage(args[0]);
-
-        while(true) {
-            System.out.print("command: ");
-            String userCommand = sc.nextLine();
-            executeCommand(userCommand, currentFile);
-        }
-
+		runProgramTillExit(sc,currentFile);
     }
+
+	private static void runProgramTillExit(Scanner sc, File currentFile){
+		while(true) {
+			System.out.print("command: ");
+			String userCommand = sc.nextLine();
+			executeCommand(userCommand, currentFile);
+		}
+	}
 
     private static void executeCommand(String userCommand, File currentFile) {
         String command = getFirstWord(userCommand);
@@ -75,7 +77,7 @@ public class TextBuddy {
 
 	private static void addStringToList(File currentFile,
 										List<String> linesOfStringFromFile)
-			throws FileNotFoundException, IOException {
+			throws IOException {
 		
 		BufferedReader inputFile = new BufferedReader(new 
 				FileReader(currentFile.getName()));
