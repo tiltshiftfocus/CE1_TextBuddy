@@ -20,7 +20,6 @@ public class TextBuddy {
         Scanner sc = new Scanner(System.in);
 
         showWelcomeMessage(args[0]);
-
 		runProgramTillExit(sc,currentFile);
     }
 
