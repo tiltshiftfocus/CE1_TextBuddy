@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class TextBuddy {
 
     private static final String ERROR_WRITING_FILE = "Error writing to file";
-	private static final String ERROR_READING_FILE = "Unable to read file";
+	private static final String ERROR_READING_FILE = "Error reading file";
 
 	public static void main(String[] args) {
 	    File currentFile = openFile(args[0]);
