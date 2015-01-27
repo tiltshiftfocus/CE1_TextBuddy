@@ -72,14 +72,15 @@ public class TextBuddy {
 		int lineToRemove = Integer.parseInt(textLineToRemove)-1; 
 		List<String> linesOfStringFromFile = new LinkedList<String>();
 		
-		// --- add all Strings from file to LinkedList, store deleted String,
-		// --- and clear current file
+		// add all Strings from file to LinkedList, store deleted String,
+		// and removing the string, then clear current file
 		addStringToList(currentFile, linesOfStringFromFile);
 		String deletedString = linesOfStringFromFile.remove(lineToRemove);
 		clearFile(currentFile);
 		// ------------------------------
 		
-		// using Iterator to search LinkedList
+		// using Iterator to loop LinkedList 
+		// and adding Strings back to currentFile
 		Iterator<String> listIterator = linesOfStringFromFile.iterator(); 
 		while(listIterator.hasNext()){
 			String textToAdd = listIterator.next();
