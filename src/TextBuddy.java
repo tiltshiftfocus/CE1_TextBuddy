@@ -186,7 +186,7 @@ public class TextBuddy {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                System.out.println("Error opening file.");
+                System.out.println(ERROR_READING_FILE);
                 System.exit(0);
             }
         }
