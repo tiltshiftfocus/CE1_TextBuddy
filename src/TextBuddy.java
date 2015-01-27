@@ -55,35 +55,36 @@ public class TextBuddy {
 		int lineToRemove = Integer.parseInt(textLineToRemove)-1; 
 		List<String> linesOfStringFromFile = new LinkedList<String>();
 		
-		try {
-			addStringToList(currentFile, linesOfStringFromFile);
-			String deletedString = linesOfStringFromFile.remove(lineToRemove);
-			clearFile(currentFile);
-
-			Iterator<String> listIterator = linesOfStringFromFile.iterator(); // using Iterator to search LinkedList
-			while(listIterator.hasNext()){
-				String textToAdd = listIterator.next();
-				addToFile(textToAdd, currentFile);
-			}
-			
-			System.out.println("deleted from " + currentFile.getName()
-					+ ": \"" + deletedString + "\"");
-			
-		} catch (IOException e) {
-			System.out.println(ERROR_READING_FILE);
+		// --- add all Strings from file to LinkedList, store deleted String,
+		// --- and clear current file
+		addStringToList(currentFile, linesOfStringFromFile);
+		String deletedString = linesOfStringFromFile.remove(lineToRemove);
+		clearFile(currentFile);
+		// ------------------------------
+		
+		// using Iterator to search LinkedList
+		Iterator<String> listIterator = linesOfStringFromFile.iterator(); 
+		while(listIterator.hasNext()){
+			String textToAdd = listIterator.next();
+			addToFile(textToAdd, currentFile);
 		}
+		
+		System.out.println("deleted from " + currentFile.getName()
+				+ ": \"" + deletedString + "\"");
 
 	}
 
-	private static void addStringToList(File currentFile,
-										List<String> linesOfStringFromFile)
-			throws IOException {
+	private static void addStringToList(File currentFile, List<String> linesOfStringFromFile) {
 		
-		BufferedReader inputFile = new BufferedReader(new 
-				FileReader(currentFile.getName()));
-		String line;
-		while((line = inputFile.readLine()) != null){
-			linesOfStringFromFile.add(line);
+		try{
+			BufferedReader inputFile = new BufferedReader(new 
+					FileReader(currentFile.getName()));
+			String line;
+			while((line = inputFile.readLine()) != null){
+				linesOfStringFromFile.add(line);
+			}
+		}catch(IOException e){
+			System.out.println(ERROR_READING_FILE);
 		}
 	}
 	
@@ -139,8 +140,9 @@ public class TextBuddy {
 			BufferedWriter outToFile = new BufferedWriter(new 
 					FileWriter(currentFile.getName(),true));
 			
+			// if file is not empty, create new line for next String
 			if(!isFileEmpty(currentFile)){
-				outToFile.newLine();
+				outToFile.newLine();	
 			}
 			
 			outToFile.write(textToAdd);
