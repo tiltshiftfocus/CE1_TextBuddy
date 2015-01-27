@@ -74,7 +74,7 @@ public class TextBuddy {
 		
 		// add all Strings from file to LinkedList, store deleted String,
 		// and removing the string, then clear current file
-		addStringToList(currentFile, linesOfStringFromFile);
+		addAllStringToList(currentFile, linesOfStringFromFile);
 		String deletedString = linesOfStringFromFile.remove(lineToRemove);
 		clearFile(currentFile);
 		
@@ -91,7 +91,7 @@ public class TextBuddy {
 
 	}
 
-	private static void addStringToList(File currentFile, List<String> linesOfStringFromFile) {
+	private static void addAllStringToList(File currentFile, List<String> linesOfStringFromFile) {
 		
 		try{
 			BufferedReader inputFile = new BufferedReader(new 
