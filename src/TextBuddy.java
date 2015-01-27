@@ -77,7 +77,6 @@ public class TextBuddy {
 		addStringToList(currentFile, linesOfStringFromFile);
 		String deletedString = linesOfStringFromFile.remove(lineToRemove);
 		clearFile(currentFile);
-		// ------------------------------
 		
 		// using Iterator to loop LinkedList 
 		// and adding Strings back to currentFile
