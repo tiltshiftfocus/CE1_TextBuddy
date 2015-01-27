@@ -1,3 +1,20 @@
+/* TextBuddy CE1 by Lim Zhen Ming
+ * A0111830X
+ * 
+ * This is CS2103 Assignment CE1, which is a simple text file editor.
+ * 
+ * This program is assumed to be run and input by the user from the keyboard.
+ * The program can also be run from a text file which consists of commands 
+ * as required by the program. 
+ * 
+ * If input is from a text file, the displayed messages may not be exactly
+ * as the given example as the commands entered will not be shown.
+ * 
+ * The text file used is assumed to be small as the implementations might not
+ * be efficient for large files.
+ * 
+*/
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
