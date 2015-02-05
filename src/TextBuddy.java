@@ -31,6 +31,7 @@ public class TextBuddy {
 
     private static final String ERROR_WRITING_FILE = "Error writing to file";
 	private static final String ERROR_READING_FILE = "Error reading file";
+	private static final String ERROR_INVALID_INDEX = "The line specified is invalid";
 
 	public static void main(String[] args) {
 	    File currentFile = openFile(args[0]);
@@ -75,19 +76,24 @@ public class TextBuddy {
 		// add all Strings from file to LinkedList, store deleted String,
 		// and removing the string, then clear current file
 		addAllStringToList(currentFile, linesOfStringFromFile);
-		String deletedString = linesOfStringFromFile.remove(lineToRemove);
-		clearFile(currentFile);
 		
-		// using Iterator to loop LinkedList 
-		// and adding Strings back to currentFile
-		Iterator<String> listIterator = linesOfStringFromFile.iterator(); 
-		while(listIterator.hasNext()){
-			String textToAdd = listIterator.next();
-			addToFile(textToAdd, currentFile);
+		if(isValidIndex(lineToRemove,linesOfStringFromFile.size())){
+			String deletedString = linesOfStringFromFile.remove(lineToRemove);
+			clearFile(currentFile);
+			
+			// using Iterator to loop LinkedList 
+			// and adding Strings back to currentFile
+			Iterator<String> listIterator = linesOfStringFromFile.iterator(); 
+			while(listIterator.hasNext()){
+				String textToAdd = listIterator.next();
+				addToFile(textToAdd, currentFile);
+			}
+			
+			System.out.println("deleted from " + currentFile.getName()
+					+ ": \"" + deletedString + "\"");
+		}else{
+			System.out.println(ERROR_INVALID_INDEX);
 		}
-		
-		System.out.println("deleted from " + currentFile.getName()
-				+ ": \"" + deletedString + "\"");
 
 	}
 
@@ -173,6 +179,10 @@ public class TextBuddy {
 	private static boolean isFileEmpty(File currentFile) {
 		return currentFile.length()<=0;
 	}
+	
+	private static boolean isValidIndex(int i, int size){
+		return (i>=0 && i<size);
+		}
 
     private static void showWelcomeMessage(String arg) {
         System.out.println("Welcome to TextBuddy. " + arg + " is ready for use.");
