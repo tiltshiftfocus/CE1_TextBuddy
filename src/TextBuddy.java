@@ -32,6 +32,7 @@ public class TextBuddy {
     private static final String ERROR_WRITING_FILE = "Error writing to file";
 	private static final String ERROR_READING_FILE = "Error reading file";
 	private static final String ERROR_INVALID_INDEX = "The line specified is invalid";
+	private static final String ERROR_INVALID_COMMAND = "command %1$s in invalid";
 
 	public static void main(String[] args) {
 		TextBuddy tb = new TextBuddy();
@@ -57,7 +58,7 @@ public class TextBuddy {
         if(command.equals("add")){
         	add(userCommand, currentFile);
         }else if(command.equals("display")){
-        	displayFile(currentFile);
+        	display(currentFile);
         }else if(command.equals("clear")){
         	clear(currentFile);
         }else if(command.equals("delete")){
@@ -65,8 +66,16 @@ public class TextBuddy {
         }else if(command.equals("exit")){
         	System.exit(0);
         }else{
-			System.out.println("command " + userCommand + " is invalid");
+			System.out.println(showError(ERROR_INVALID_COMMAND, userCommand));
 		}
+    }
+    
+    private void showToUser(String text){
+		System.out.println(text);
+    }
+    
+    private String showError(String errorObject, String userCommand){
+    	return String.format(errorObject, userCommand);
     }
 
 
@@ -129,6 +138,10 @@ public class TextBuddy {
 		} catch (IOException e) {
 			System.out.println(ERROR_WRITING_FILE);
 		}
+	}
+	
+	public void display(File currentFile){
+		displayFile(currentFile);
 	}
 
 	private void displayFile(File currentFile) {
