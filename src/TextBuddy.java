@@ -29,7 +29,8 @@ import java.util.Scanner;
 
 public class TextBuddy {
 
-    private static final String ERROR_WRITING_FILE = "Error writing to file";
+    private static final int ARRAY_INDEX_OFFSET = 1;
+	private static final String ERROR_WRITING_FILE = "Error writing to file";
 	private static final String ERROR_READING_FILE = "Error reading file";
 	private static final String ERROR_INVALID_INDEX = "The line specified is invalid";
 	private static final String ERROR_INVALID_COMMAND = "command %1$s in invalid";
@@ -89,7 +90,7 @@ public class TextBuddy {
 
 	private static boolean deleteFromFile(String textLineToRemove, File currentFile) {
 		
-		int indexOfLineToRemove = Integer.parseInt(textLineToRemove)-1; 
+		int indexOfLineToRemove = Integer.parseInt(textLineToRemove)- ARRAY_INDEX_OFFSET; 
 		List<String> linesOfStringFromFile = new LinkedList<String>();
 		
 		// add all Strings from file to LinkedList, store deleted String,
