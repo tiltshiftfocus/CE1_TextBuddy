@@ -44,7 +44,7 @@ public class TextBuddy {
 		tb.runProgramTillExit(sc,currentFile);
     }
 
-	private void runProgramTillExit(Scanner sc, File currentFile){
+	private static void runProgramTillExit(Scanner sc, File currentFile){
 		while(true) {
 			System.out.print("command: ");
 			String userCommand = sc.nextLine();
@@ -52,7 +52,7 @@ public class TextBuddy {
 		}
 	}
 
-    private void executeCommand(String userCommand, File currentFile) {
+    private static void executeCommand(String userCommand, File currentFile) {
         String command = getFirstWord(userCommand);
         
         if(command.equals("add")){
@@ -70,16 +70,16 @@ public class TextBuddy {
 		}
     }
     
-    private void showToUser(String text){
+    private static void showToUser(String text){
 		System.out.println(text);
     }
     
-    private String showError(String errorObject, String userCommand){
+    private static String showError(String errorObject, String userCommand){
     	return String.format(errorObject, userCommand);
     }
 
 
-	private void deleteFromFile(String userCommand, File currentFile) {
+	private static void deleteFromFile(String userCommand, File currentFile) {
 		String textLineToRemove = removeFirstWord(userCommand);
 		int lineToRemove = Integer.parseInt(textLineToRemove)-1; 
 		List<String> linesOfStringFromFile = new LinkedList<String>();
@@ -108,7 +108,7 @@ public class TextBuddy {
 
 	}
 
-	private void addAllStringToList(File currentFile, List<String> linesOfStringFromFile) {
+	private static void addAllStringToList(File currentFile, List<String> linesOfStringFromFile) {
 		
 		try{
 			BufferedReader inputFile = new BufferedReader(new 
@@ -122,12 +122,12 @@ public class TextBuddy {
 		}
 	}
 	
-	public void clear(File currentFile) {
+	public static void clear(File currentFile) {
 		clearFile(currentFile);
 		System.out.println("all content deleted from " + currentFile.getName());
 	}
 
-	private void clearFile(File currentFile) {
+	private static void clearFile(File currentFile) {
 		try {
 			BufferedWriter outToFile = new BufferedWriter(new 
 					FileWriter(currentFile.getName(),false));
@@ -140,11 +140,11 @@ public class TextBuddy {
 		}
 	}
 	
-	public void display(File currentFile){
+	public static void display(File currentFile){
 		displayFile(currentFile);
 	}
 
-	private void displayFile(File currentFile) {
+	private static void displayFile(File currentFile) {
 		if(isFileEmpty(currentFile)){
 			System.out.println(currentFile.getName() + " is empty");
 		}else{
@@ -165,14 +165,14 @@ public class TextBuddy {
 		}
 	}
 	
-	public void add(String userCommand, File currentFile) {
+	public static void add(String userCommand, File currentFile) {
 		String textToAdd = removeFirstWord(userCommand);
 		addToFile(textToAdd, currentFile);
 		System.out.println("added to " + currentFile.getName()
 				+ ": \"" + textToAdd + "\"");
 	}
 
-	private void addToFile(String textToAdd, File currentFile) {
+	private static void addToFile(String textToAdd, File currentFile) {
 		
 		try {
 			BufferedWriter outToFile = new BufferedWriter(new 
@@ -191,19 +191,19 @@ public class TextBuddy {
 		}
 	}
 
-	public boolean isFileEmpty(File currentFile) {
+	public static boolean isFileEmpty(File currentFile) {
 		return currentFile.length()<=0;
 	}
 	
-	private boolean isValidIndex(int i, int size){
+	private static boolean isValidIndex(int i, int size){
 		return (i>=0 && i<size);
 		}
 
-    private void showWelcomeMessage(String arg) {
+    private static void showWelcomeMessage(String arg) {
         System.out.println("Welcome to TextBuddy. " + arg + " is ready for use.");
     }
 
-    private File openFile(String fileName) {
+    private static File openFile(String fileName) {
         File file = new File(fileName);
 
         if(!file.exists()){
@@ -217,11 +217,11 @@ public class TextBuddy {
         return file;
     }
 
-    private String removeFirstWord(String userCommand) {
+    private static String removeFirstWord(String userCommand) {
         return userCommand.replace(getFirstWord(userCommand), "").trim();
     }
 
-    private String getFirstWord(String userCommand) {
+    private static String getFirstWord(String userCommand) {
         return userCommand.trim().split("\\s+")[0];
     }
 }
