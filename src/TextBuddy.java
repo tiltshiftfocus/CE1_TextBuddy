@@ -77,19 +77,27 @@ public class TextBuddy {
     private static String showError(String errorObject, String userCommand){
     	return String.format(errorObject, userCommand);
     }
+    
+    public static boolean delete(String userCommand, File currentFile){
+    	String textLineToRemove = removeFirstWord(userCommand);
+    	if(deleteFromFile(textLineToRemove, currentFile)){
+    		return true;
+    	}
+    	return false;
+    }
 
 
-	private static void deleteFromFile(String userCommand, File currentFile) {
-		String textLineToRemove = removeFirstWord(userCommand);
-		int lineToRemove = Integer.parseInt(textLineToRemove)-1; 
+	private static boolean deleteFromFile(String textLineToRemove, File currentFile) {
+		
+		int indexOfLineToRemove = Integer.parseInt(textLineToRemove)-1; 
 		List<String> linesOfStringFromFile = new LinkedList<String>();
 		
 		// add all Strings from file to LinkedList, store deleted String,
 		// and removing the string, then clear current file
 		addAllStringToList(currentFile, linesOfStringFromFile);
 		
-		if(isValidIndex(lineToRemove,linesOfStringFromFile.size())){
-			String deletedString = linesOfStringFromFile.remove(lineToRemove);
+		if(isValidIndex(indexOfLineToRemove,linesOfStringFromFile.size())){
+			String deletedString = linesOfStringFromFile.remove(indexOfLineToRemove);
 			clearFile(currentFile);
 			
 			// using Iterator to loop LinkedList 
@@ -102,9 +110,12 @@ public class TextBuddy {
 			
 			System.out.println("deleted from " + currentFile.getName()
 					+ ": \"" + deletedString + "\"");
+			return true;
 		}else{
 			System.out.println(ERROR_INVALID_INDEX);
 		}
+		
+		return false;
 
 	}
 
@@ -122,22 +133,30 @@ public class TextBuddy {
 		}
 	}
 	
-	public static void clear(File currentFile) {
-		clearFile(currentFile);
-		System.out.println("all content deleted from " + currentFile.getName());
+	public static boolean clear(File currentFile) {
+		if(clearFile(currentFile)){
+			System.out.println("all content deleted from " + currentFile.getName());
+			return true;
+		}else{
+			return false;
+		}
+		
 	}
 
-	private static void clearFile(File currentFile) {
+	private static boolean clearFile(File currentFile) {
 		try {
 			BufferedWriter outToFile = new BufferedWriter(new 
 					FileWriter(currentFile.getName(),false));
 			
 			outToFile.write("");
 			outToFile.close();
+			return true;
 			
 		} catch (IOException e) {
 			System.out.println(ERROR_WRITING_FILE);
 		}
+		
+		return false;
 	}
 	
 	public static void display(File currentFile){
@@ -165,30 +184,38 @@ public class TextBuddy {
 		}
 	}
 	
-	public static void add(String userCommand, File currentFile) {
+	public static boolean add(String userCommand, File currentFile) {
 		String textToAdd = removeFirstWord(userCommand);
-		addToFile(textToAdd, currentFile);
-		System.out.println("added to " + currentFile.getName()
-				+ ": \"" + textToAdd + "\"");
+		
+		if(addToFile(textToAdd, currentFile)){
+			System.out.println("added to " + currentFile.getName()
+					+ ": \"" + textToAdd + "\"");
+			
+			return true;
+		}else{
+			return false;
+		}
 	}
 
-	private static void addToFile(String textToAdd, File currentFile) {
+	private static boolean addToFile(String textToAdd, File currentFile) {
 		
 		try {
 			BufferedWriter outToFile = new BufferedWriter(new 
 					FileWriter(currentFile.getName(),true));
 			
-			// if file is not empty, create new line for next String
 			if(!isFileEmpty(currentFile)){
-				outToFile.newLine();	
+				outToFile.newLine();	// a new line for next String
 			}
 			
 			outToFile.write(textToAdd);
 			outToFile.close();
+			return true;
 			
 		} catch (IOException e) {
 			System.out.println(ERROR_WRITING_FILE);
 		}
+		
+		return false;
 	}
 
 	public static boolean isFileEmpty(File currentFile) {
