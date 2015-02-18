@@ -63,7 +63,7 @@ public class TextBuddy {
         }else if(command.equals("clear")){
         	clear(currentFile);
         }else if(command.equals("delete")){
-        	deleteFromFile(userCommand,currentFile);
+        	delete(userCommand,currentFile);
         }else if(command.equals("exit")){
         	System.exit(0);
         }else{
